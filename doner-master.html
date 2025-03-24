@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>JS Bin</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/form-style.css">
+</head>
+
+<body>
+
+    <aside>
+        <div class="sidebar-header">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkkoS6QTVn6ofip3cXucUuH7b2IUvcXRbl7w&s"
+                alt="">
+            <hr>
+        </div>
+        <div class="sidebar-body">
+            <button onclick="window.location.href='dashboard.html'" class="active">Dashboard</button>
+
+            <button onclick="window.location.href='doner-master.html'">Doner Master</button>
+            <button onclick="window.location.href='master.html'">City & Outlet Master</button>
+            <button onclick="window.location.href='doner-list.html'">Doner Details</button>
+            <button onclick="window.location.href='doner-master.html'">Donation Details</button>
+        </div>
+        <div class="sidebar-footer">
+            <button onclick="window.location.href='index.html'">Logout</button>
+        </div>
+    </aside>
+
+    <main>
+
+        <div class="container">
+
+            <h2>Donor Registration Form</h2>
+
+            <form action="#" method="post">
+                <!-- Emp ID -->
+                <div class="form-control">
+                    <label for="empID">Emp ID</label>
+                    <input type="number" id="empID" name="emp_id" required />
+                </div>
+
+                <!-- Donor Name -->
+                <div class="form-control">
+                    <label for="donorName">Donor Name</label>
+                    <input type="text" id="donorName" name="donor_name" required />
+                </div>
+
+                <!-- Contact No -->
+                <div class="form-control">
+                    <label for="contactNo">Contact No</label>
+                    <input type="number" maxlength="10" id="contactNo" name="contact_no" required />
+                </div>
+
+                <!-- Gender using radio buttons -->
+                <div class="form-control">
+                    <label>Gender</label>
+                    <input type="text" name="" id="">
+                </div>
+
+                <!-- City -->
+                <div class="form-control">
+                    <label for="city">City</label>
+                    <select id="city" name="city" required>
+                        <option value="" selected disabled>Select city</option>
+                        <option value="Bangalore">Bangalore</option>
+                        <option value="Mysore">Mysore</option>
+                        <option value="Chennai">Chennai</option>
+                        <option value="Hyderabad">Hyderabad</option>
+                    </select>
+                </div>
+
+                <!-- Outlet -->
+                <div class="form-control">
+                    <label for="outlet">Outlet</label>
+                    <select id="outlet" name="outlet" required>
+                        <option value="" selected disabled>Select outlet</option>
+                        <option value="ALK">ALK</option>
+                        <option value="ARK">ARK</option>
+                        <option value="BFD">BFD</option>
+                        <option value="CST">CST</option>
+                        <option value="DVH">DVH</option>
+                        <option value="HE">HE</option>
+                    </select>
+                </div>
+
+                <!-- Blood Group -->
+                <div class="form-control">
+                    <label for="bloodGroup">Blood Group</label>
+                    <select name="blood-group">
+                        <option selected disabled>Select blood group</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                </div>
+
+                <!-- Date of Birth -->
+                <div class="form-control">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" name="date_of_birth" required />
+                </div>
+
+                <!-- Buttons -->
+                <div class="form-control btn-group">
+                    <button type="submit" class="submit">Submit</button>
+                    <button type="reset" class="cancel">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+    </main>
+</body>
+
+</html>

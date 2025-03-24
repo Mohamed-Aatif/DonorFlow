@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>JS Bin</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/form-style.css">
+
+</head>
+
+<body>
+
+    <aside>
+        <div class="sidebar-header">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkkoS6QTVn6ofip3cXucUuH7b2IUvcXRbl7w&s"
+                alt="">
+            <hr>
+        </div>
+        <div class="sidebar-body">
+            <button onclick="window.location.href='dashboard.html'" class="active">Dashboard</button>
+
+            <button onclick="window.location.href='doner-master.html'">Doner Master</button>
+            <button onclick="window.location.href='master.html'">City & Outlet Master</button>
+            <button onclick="window.location.href='doner-list.html'">Doner Details</button>
+            <button onclick="window.location.href='doner-master.html'">Donation Details</button>
+        </div>
+        <div class="sidebar-footer">
+            <button onclick="window.location.href='index.html'">Logout</button>
+        </div>
+    </aside>
+
+    <main>
+
+        <div class="container">
+
+            <h2>Donor List</h2>
+            <input type="text" id="searchBox" placeholder="Search table..." onkeyup="filterTable()">
+
+            <table id="employeeTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Emp ID</th>
+                        <th>Name</th>
+                        <th>Designation</th>
+                        <th>Contact No</th>
+                        <th>Gender</th>
+                        <th>City</th>
+                        <th>Outlet</th>
+                        <th>Blood Group</th>
+                        <th>DOB</th>
+                        <th>Age</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>19669</td>
+                        <td>Mohamed Aatif</td>
+                        <td>Call Center Executive</td>
+                        <td>7975394926</td>
+                        <td>M</td>
+                        <td>Bangalore</td>
+                        <td>Head Office</td>
+                        <td>AB+</td>
+                        <td>04-08-2000</td>
+                        <td>24</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>19669</td>
+                        <td>Pooja</td>
+                        <td>Call Center Executive</td>
+                        <td>7975394926</td>
+                        <td>F</td>
+                        <td>Bangalore</td>
+                        <td>Head Office</td>
+                        <td>AB+</td>
+                        <td>04-08-2000</td>
+                        <td>24</td>
+                        <td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+    <script>
+
+        function filterTable() {
+            const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+            const filteredData = data.filter(row =>
+                Object.values(row).some(value => value.toString().toLowerCase().includes(searchTerm))
+            );
+
+            const tableBody = document.querySelector('#employeeTable tbody');
+            tableBody.innerHTML = '';
+
+            for (let i = 0; i < filteredData.length; i++) {
+                const row = filteredData[i];
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row.sNo}</td>
+                    <td>${row.empId}</td>
+                    <td>${row.name}</td>
+                    <td>${row.designation}</td>
+                    <td>${row.contact}</td>
+                    <td>${row.gender}</td>
+                    <td>${row.city}</td>
+                    <td>${row.outlet}</td>
+                    <td>${row.bloodGroup}</td>
+                    <td>${row.dob}</td>
+                    <td>${row.age}</td>
+                `;
+                tableBody.appendChild(tr);
+            }
+        }
+
+    </script>
+</body>
+
+</html>

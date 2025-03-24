@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Roboto", sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      width: 100vw;
+      background: #fff;
+      display: flex;
+      overflow-x: hidden;
+    }
+
+    aside {
+      width: 220px;
+      height: 100vh;
+      background: rgb(6, 148, 156);
+      background: linear-gradient(180deg, rgba(6, 148, 156, 1) 0%, rgba(172, 230, 231, 1) 100%);
+      position: fixed;
+      box-shadow: 0 0 10px #000;
+    }
+
+    aside hr {
+      border-color: #0005;
+    }
+
+    .sidebar-header {
+      padding: 10px;
+    }
+
+    .sidebar-header img {
+      margin-bottom: 5px;
+      width: 100%;
+    }
+
+    .sidebar-body,
+    .sidebar-footer {
+      padding: 0 10px;
+      height: calc(100vh - 130px);
+      display: flex;
+      flex-direction: column;
+      /* background-color: #000; */
+      overflow-y: auto;
+    }
+
+    .sidebar-body button,
+    .sidebar-footer button {
+      margin: 3px 0;
+      padding: 8px 6px;
+      text-align: left;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      font-size: 14px;
+      color: #fff;
+      background-color: #0A9198;
+      border: none;
+    }
+
+    .sidebar-body button>svg,
+    .sidebar-footer button>svg {
+      margin-right: 5px;
+    }
+
+
+    .sidebar-body .active,
+    .sidebar-footer .active {
+      background-color: #006B75 !important;
+    }
+
+    main {
+      padding: 0 20px;
+      margin-left: 220px;
+      width: calc(100vw - 230px);
+      height: 120vh;
+      background: #f2f2f2;
+      /* background: #333; */
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cards-container {
+      padding: 20px 0;
+      width: 100%;
+      height: 100px;
+      /* background: #333; */
+      display: inline-flex;
+      justify-content: space-between;
+    }
+
+    .cards {
+      margin: auto;
+      padding: 15px;
+      width: 23%;
+      /* width: 200px; */
+      height: 80px;
+      height: auto;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 5px 5px #0005;
+      transition: .5s;
+      cursor: pointer;
+    }
+
+    .cards:hover {
+      box-shadow: 0 0px 5px #0005;
+    }
+
+    .card-title {
+      /* background-color: #888; */
+    }
+
+    .cards>hr {
+      margin: 5px 0;
+    }
+
+    .card-count {
+      font-size: 18px;
+      text-align: right;
+      font-weight: bold;
+    }
+
+    .container {
+      margin: 20px 0;
+      padding: 15px;
+      width: 100%;
+      height: 300px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 5px 5px #0005;
+      transition: .5s;
+    }
+
+    .container:hover {
+      box-shadow: 0 0 5px #0005;
+    }
+  </style>
+</head>
+
+<body>
+
+  <aside>
+    <div class="sidebar-header">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkkoS6QTVn6ofip3cXucUuH7b2IUvcXRbl7w&s" alt="">
+      <hr>
+    </div>
+    <div class="sidebar-body">
+      <button onclick="window.location.href='dashboard.html'" class="active">Dashboard</button>
+
+      <button onclick="window.location.href='doner-master.html'">Doner Master</button>
+      <button onclick="window.location.href='master.html'">City & Outlet Master</button>
+      <button onclick="window.location.href='doner-list.html'">Doner Details</button>
+      <button onclick="window.location.href='doner-master.html'">Donation Details</button>
+    </div>
+    <div class="sidebar-footer">
+      <button onclick="window.location.href='index.html'">Logout</button>
+    </div>
+  </aside>
+
+  <main>
+    <div class="cards-container">
+
+      <div class="cards">
+        <p class="card-title">Total</p>
+        <hr>
+        <p class="card-count">1500</p>
+      </div>
+
+      <div class="cards">
+        <p class="card-title">Available</p>
+        <hr>
+        <p class="card-count">1400</p>
+      </div>
+
+      <div class="cards">
+        <p class="card-title">City</p>
+        <hr>
+        <p class="card-count">5</p>
+      </div>
+
+      <div class="cards">
+        <p class="card-title">Donation</p>
+        <hr>
+        <p class="card-count">80</p>
+      </div>
+
+    </div>
+
+    <div class="container">
+      <canvas id="myChart"></canvas>
+    </div>
+
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Jan-25', 'Feb-25', 'March-25', 'Apr-25', 'May-25', 'June-25', 'July-25', 'Aug-25', 'Sep-25', 'Oct-25', 'Nov-25', 'Dec-25'],
+        datasets: [{
+          label: '# of Votes',
+          data: [2, 3, 7, 7, 8, 14, 7, 9, 9, 0, 5, 2],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

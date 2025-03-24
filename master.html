@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>JS Bin</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/form-style.css">
+</head>
+
+<body>
+
+    <aside>
+        <div class="sidebar-header">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkkoS6QTVn6ofip3cXucUuH7b2IUvcXRbl7w&s"
+                alt="">
+            <hr>
+        </div>
+        <div class="sidebar-body">
+            <button onclick="window.location.href='dashboard.html'" class="active">Dashboard</button>
+
+            <button onclick="window.location.href='doner-master.html'">Doner Master</button>
+            <button onclick="window.location.href='master.html'">City & Outlet Master</button>
+            <button onclick="window.location.href='doner-list.html'">Doner Details</button>
+            <button onclick="window.location.href='doner-master.html'">Donation Details</button>
+        </div>
+        <div class="sidebar-footer">
+            <button onclick="window.location.href='index.html'">Logout</button>
+        </div>
+    </aside>
+
+    <main>
+
+
+        <div class="container">
+
+            <h2>Add New Outlet</h2>
+
+            <form action="#" method="post">
+                <!-- Emp ID -->
+                <div class="form-control">
+                    <label for="empID">City</label>
+                    <select name="" id="">
+                        <option selected disabled>Select city</option>
+                        <option value="">Bangalore</option>
+                        <option value="">Mysore</option>
+                        <option value="">Chennai</option>
+                        <option value="">Hyderabad</option>
+                    </select>
+                </div>
+
+                <div class="form-control">
+                    <label for="empID">Outlet Code</label>
+                    <input type="text" id="empID" name="emp_id" required />
+                </div>
+
+                <!-- Buttons -->
+                <div class="form-control btn-group">
+                    <button type="submit" class="submit">Submit</button>
+                    <button type="reset" class="cancel">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="container">
+
+            <h2>Add New City</h2>
+
+            <form action="#" method="post">
+                <!-- Emp ID -->
+                <div class="form-control">
+                    <label for="empID">City Name</label>
+                    <input type="text" id="empID" name="emp_id" required />
+                </div>
+
+                <!-- Buttons -->
+                <div class="form-control btn-group">
+                    <button type="submit" class="submit">Submit</button>
+                    <button type="reset" class="cancel">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+    </main>
+</body>
+
+</html>

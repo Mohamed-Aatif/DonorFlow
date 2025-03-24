@@ -1,0 +1,85 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    background: #fff;
+    display: flex;
+    overflow-x: hidden;
+}
+
+aside {
+    width: 220px;
+    height: 100vh;
+    background: rgb(6, 148, 156);
+    background: linear-gradient(180deg, rgba(6, 148, 156, 1) 0%, rgba(172, 230, 231, 1) 100%);
+    position: fixed;
+    box-shadow: 0 0 10px #000;
+}
+
+aside hr {
+    border-color: #0005;
+}
+
+.sidebar-header {
+    padding: 10px;
+}
+
+.sidebar-header img {
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+.sidebar-body,
+.sidebar-footer {
+    padding: 0 10px;
+    height: calc(100vh - 130px);
+    display: flex;
+    flex-direction: column;
+    /* background-color: #000; */
+    overflow-y: auto;
+}
+
+.sidebar-body button,
+.sidebar-footer button {
+    margin: 3px 0;
+    padding: 8px 6px;
+    text-align: left;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    font-size: 14px;
+    color: #fff;
+    background-color: #0A9198;
+    border: none;
+}
+
+.sidebar-body button>svg,
+.sidebar-footer button>svg {
+    margin-right: 5px;
+}
+
+
+.sidebar-body .active,
+.sidebar-footer .active {
+    background-color: #006B75 !important;
+}
+
+main {
+    padding: 20px;
+    margin-left: 220px;
+    width: calc(100vw - 220px);
+    height: 100vh;
+    background: #f2f2f2;
+    /* background: #333; */
+    display: flex;
+    flex-direction: column;
+}
