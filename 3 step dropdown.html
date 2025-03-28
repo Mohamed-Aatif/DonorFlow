@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form 2: State > City > Outlet</title>
+    <script>
+        const stateToCityOutlet = {
+            Karnataka: {
+                Bengaluru: ["Outlet A", "Outlet B", "Outlet C"],
+                Mysuru: ["Outlet D", "Outlet E"]
+            },
+            Maharashtra: {
+                Mumbai: ["Outlet F", "Outlet G"],
+                Pune: ["Outlet H"]
+            }
+        };
+
+        function populateCities() {
+            const stateSelect = document.getElementById("state");
+            const citySelect = document.getElementById("city");
+            const outletSelect = document.getElementById("outlet");
+
+            citySelect.innerHTML = "<option value=''>Select City</option>";
+            outletSelect.innerHTML = "<option value=''>Select Outlet</option>"; // Reset outlet dropdown
+
+            const selectedState = stateSelect.value;
+
+            if (selectedState && stateToCityOutlet[selectedState]) {
+                for (const city in stateToCityOutlet[selectedState]) {
+                    const option = document.createElement("option");
+                    option.value = city;
+                    option.textContent = city;
+                    citySelect.appendChild(option);
+                }
+            }
+        }
+
+        function populateOutlets() {
+            const stateSelect = document.getElementById("state");
+            const citySelect = document.getElementById("city");
+            const outletSelect = document.getElementById("outlet");
+
+            outletSelect.innerHTML = "<option value=''>Select Outlet</option>"; // Reset outlet dropdown
+
+            const selectedState = stateSelect.value;
+            const selectedCity = citySelect.value;
+
+            if (
+                selectedState &&
+                stateToCityOutlet[selectedState] &&
+                stateToCityOutlet[selectedState][selectedCity]
+            ) {
+                for (const outlet of stateToCityOutlet[selectedState][selectedCity]) {
+                    const option = document.createElement("option");
+                    option.value = outlet;
+                    option.textContent = outlet;
+                    outletSelect.appendChild(option);
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <form>
+        <label for="state">State:</label>
+        <select id="state" name="state" onchange="populateCities()">
+            <option value="">Select State</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Maharashtra">Maharashtra</option>
+        </select>
+        <br><br>
+        <label for="city">City:</label>
+        <select id="city" name="city" onchange="populateOutlets()">
+            <option value="">Select City</option>
+        </select>
+        <br><br>
+        <label for="outlet">Outlet:</label>
+        <select id="outlet" name="outlet">
+            <option value="">Select Outlet</option>
+        </select>
+    </form>
+</body>
+</html>

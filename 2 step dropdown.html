@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form 1: State > City</title>
+    <script>
+        const stateToCity = {
+            Karnataka: ["Bengaluru", "Mysuru", "Hubli"],
+            Maharashtra: ["Mumbai", "Pune", "Nagpur"],
+            TamilNadu: ["Chennai", "Coimbatore", "Madurai"]
+        };
+
+        function populateCities() {
+            const stateSelect = document.getElementById("state");
+            const citySelect = document.getElementById("city");
+
+            citySelect.innerHTML = "<option value=''>Select City</option>"; // Reset city dropdown
+
+            const selectedState = stateSelect.value;
+
+            if (selectedState && stateToCity[selectedState]) {
+                for (const city of stateToCity[selectedState]) {
+                    const option = document.createElement("option");
+                    option.value = city;
+                    option.textContent = city;
+                    citySelect.appendChild(option);
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <form>
+        <label for="state">State:</label>
+        <select id="state" name="state" onchange="populateCities()">
+            <option value="">Select State</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="TamilNadu">Tamil Nadu</option>
+        </select>
+        <br><br>
+        <label for="city">City:</label>
+        <select id="city" name="city">
+            <option value="">Select City</option>
+        </select>
+    </form>
+</body>
+</html>
