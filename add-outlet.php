@@ -42,7 +42,7 @@ if (isset($_POST['id']) && isset($_POST['status'])) {
                         <option selected disabled>Select City</option>
 
                         <?php
-                        $sql_fetch = "SELECT city,city_status FROM `city` WHERE city_status = 1";
+                        $sql_fetch = "SELECT city,city_status FROM `city` WHERE city_status = 1 ORDER BY city ASC";
                         $result = mysqli_query($conn, $sql_fetch);
 
                         if ($result->num_rows > 0) {
@@ -89,12 +89,24 @@ if (isset($_POST['id']) && isset($_POST['status'])) {
             <table class="min-w-full divide-y divide-gray-200" id="myTable">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">S No</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">City</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">outlet</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No of Donor</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">S No
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">City
+                        </th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            outlet</th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No of
+                            Donor</th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Status</th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Actions</th>
                     </tr>
                 </thead>
 
@@ -143,13 +155,10 @@ if (isset($_POST['id']) && isset($_POST['status'])) {
                     } else {
                         ?>
                         <tr>
-                            <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500' colspan='4'>No Data
-                                Found</td>
+                            <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500' colspan='4'>No Data Found</td>
                         </tr>
                         <?php
                     }
-
-                    mysqli_close($conn); // Close the connection (optional but recommended)
                     ?>
 
                 </tbody>
@@ -179,18 +188,18 @@ if (isset($_POST['id']) && isset($_POST['status'])) {
                     <input type="text" id="outletcityupdate" name="outletcityupdate" list="city-list" autocomplete="off" required>
                     <datalist id="city-list">
                         <?php
-                        $sql_fetch = "SELECT city,city_status FROM `city` WHERE city_status = 1";
+                        $sql_fetch = "SELECT * FROM `city` WHERE `city_status` = 1 ORDER BY city ASC";
                         $result = mysqli_query($conn, $sql_fetch);
 
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
-                                
+
                                 echo "<option value='" . $row['city'] . "'>";
-                                
+
                             }
                         }
                         ?>
-                     </datalist>
+                    </datalist>
                 </div>
                 <div class="form-control">
                     <label for="outletupdate">outlet</label>

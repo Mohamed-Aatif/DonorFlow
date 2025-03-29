@@ -45,3 +45,45 @@
     </form>
 </body>
 </html>
+
+
+
+
+
+<!-- <?php
+include 'db_connection.php'; // Include database connection
+
+// Initialize the array
+$stateToCity = [];
+
+// Query to fetch states and their cities
+$stateQuery = "SELECT states.state_name, cities.city_name FROM states 
+               JOIN cities ON states.id = cities.state_id";
+$result = mysqli_query($conn, $stateQuery);
+
+// Loop through the results and build the array
+while ($row = mysqli_fetch_assoc($result)) {
+    $state = $row['state_name'];
+    $city = $row['city_name'];
+
+    // If the state doesn't exist in the array, initialize it
+    if (!isset($stateToCity[$state])) {
+        $stateToCity[$state] = [];
+    }
+
+    // Add the city to the state's list
+    $stateToCity[$state][] = $city;
+}
+
+// Convert to JSON for JavaScript
+echo json_encode($stateToCity);
+?> -->
+<!-- <script>
+    // PHP output as JSON
+    const stateToCity = <?php echo json_encode($stateToCity); ?>;
+
+    console.log(stateToCity);
+
+    // Example: Access cities
+    console.log(stateToCity.Karnataka); // Outputs: ["Bengaluru", "Mysuru", "Hubli"]
+</script> -->

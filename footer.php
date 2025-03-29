@@ -1,3 +1,16 @@
+    <script>
+    // This function is used to show number of row 
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "pageLength": 10
+        });
+    });
+
+    </script>
+    
     <!-- Brand Detail TableScript  -->
     <script src="https://cdn.tailwindcss.com"></script>
 

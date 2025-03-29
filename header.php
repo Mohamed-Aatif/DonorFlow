@@ -126,7 +126,7 @@ require 'db.conn.php';
             <button class="dropdown-btn"><span class="material-symbols-outlined">store</span>Master</button>
 
             <div class="dropdown-container">
-                <button onclick="location.href='add-doner.php'">Doner Master</button>
+                <button onclick="location.href='add-donor.php'">Donor Master</button>
                 <button onclick="location.href='add-outlet.php'">Outlet Master</button>
                 <button onclick="location.href='add-city.php'">City Master</button>
                 <button onclick="location.href='add-designation.php'">Designation Master</button>
@@ -135,8 +135,8 @@ require 'db.conn.php';
             <button class="dropdown-btn"><span class="material-symbols-outlined">store</span>Record</button>
 
             <div class="dropdown-container">
-                <button onclick="location.href='outlet-details.php'">Doner Record</button>
-                <button onclick="location.href='brand-list.php'">Doner List</button>
+                <button onclick="location.href='outlet-details.php'">Donor Record</button>
+                <button onclick="location.href='brand-list.php'">Donor List</button>
             </div>
 
             <button class="dropdown-btn"><span class="material-symbols-outlined">manage_accounts</span>User

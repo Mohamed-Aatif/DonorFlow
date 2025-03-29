@@ -75,7 +75,7 @@ if (isset($_POST['id']) && isset($_POST['status'])) {
                     <tbody class="bg-white divide-y divide-gray-200" id="tableBody">
 
                         <?php
-                        $sql = "SELECT * FROM `city`"; // Query to fetch data
+                        $sql = "SELECT * FROM `city` ORDER BY city ASC"; // Query to fetch data
                         $result = $conn->query($sql);
 
                         if ($result->num_rows > 0) { // Check if data exists
