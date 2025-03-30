@@ -69,8 +69,8 @@ if (isset($_POST['id']) && isset($_POST['status'])) {
                 <div class="form-control">
                     <label for="gender">Gender<span class="required">*</span></label>
                     <div class="radio-group">
-                        <label><input type="radio" name="gender" id="male" value="male" required>Male</label>
-                        <label><input type="radio" name="gender" id="female" value="female" required>Female</label>
+                        <label><input type="radio" name="gender" id="Male" value="Male" required>Male</label>
+                        <label><input type="radio" name="gender" id="Female" value="Female" required>Female</label>
                     </div>
                 </div>
 
@@ -118,10 +118,6 @@ if (isset($_POST['id']) && isset($_POST['status'])) {
                     <label for="outlet">Select Outlet<span class="required">*</span></label>
                     <select id="outlet" name="outlet" required>
                         <option selected disabled>Select outlet</option>
-                        <option value="alk">ALK</option>
-                        <option value="ark">ARK</option>
-                        <option value="bfd">BFD</option>
-                        <option value="cst">CST</option>
                     </select>
                 </div>
 
@@ -139,12 +135,17 @@ if (isset($_POST['id']) && isset($_POST['status'])) {
         <div class="header">
             <span>Designation List</span>
 
-            <select id="rowsPerPage" style="width: 70px;">
-                <option value="10" selected>10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select>
+            <div class="header-filter">
+                <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search" autocomplete="off">
+                
+                <select id="rowsPerPage" style="width: 70px;">
+                    <option value="10" selected>10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+            </div>
+
         </div>
 
         <div class="body">
@@ -239,61 +240,6 @@ if (isset($_POST['id']) && isset($_POST['status'])) {
     <!-- This tag push status update success notification  -->
     <div id="notification" class="status-ntf notification success"></div>
 
-    <!-- This div contain update form & popup modal  -->
-    <div class="popup-overlay" id="editpopup">
-        <div class="container modal-container">
-            <div class="header">
-                <span>Update City</span>
-            </div>
-            <div class="body">
-            <form id="editForm" method="post">
-                <input type="text" id="cityid" name="cityid" hidden>
-                <div class="form-control">
-                    <label for="employeeid">Employee ID</label>
-                    <input type="text" id="employeeid" name="employeeid" autocomplete="off" required>
-                </div>
-                <div class="form-control">
-                    <label for="donorname">Donor Name</label>
-                    <input type="text" id="donorname" name="donorname" autocomplete="off" required>
-                </div>
-                <div class="form-control">
-                    <label for="contactno">Contact No</label>
-                    <input type="text" id="contactno" name="contactno" autocomplete="off" required>
-                </div>
-                <div class="form-control">
-                    <label for="bloodgroup">Blood Group</label>
-                    <input type="text" id="bloodgroup" name="bloodgroup" autocomplete="off" required>
-                </div>
-                <div class="form-control">
-                    <label for="gender">Gender</label>
-                    <input type="text" id="gender" name="gender" autocomplete="off" required>
-                </div>
-                <div class="form-control">
-                    <label for="dob">Date of Birth</label>
-                    <input type="text" id="dob" name="dob" autocomplete="off" required>
-                </div>
-                <div class="form-control">
-                    <label for="designation">Designation</label>
-                    <input type="text" id="designation" name="designation" autocomplete="off" required>
-                </div>
-                <div class="form-control">
-                    <label for="city">City</label>
-                    <input type="text" id="city" name="city" autocomplete="off" required>
-                </div>
-                <div class="form-control">
-                    <label for="outlet">Outlet</label>
-                    <input type="text" id="outlet" name="outlet" autocomplete="off" required>
-                </div>
-                <div class="form-btn">
-                    <button type="submit" name="update" class="success-btn">Submit</button>
-                    <button type="button" onclick="closeEditPopup()" class="danger-btn" id="closeButton">Close</button>
-                </div>
-            </form>
-
-            </div>
-        </div>
-    </div>
-
     <!-- This div contain record delete conformation popup  -->
     <div class="popup-overlay" id="popup">
         <div class="popup">
@@ -314,25 +260,6 @@ if (isset($_POST['id']) && isset($_POST['status'])) {
                 const id = this.getAttribute('data-id'); // Get the ID from the data-id attribute
                 // Redirect to update.php with the ID as a query parameter
                 window.location.href = `donor-update.php?id=${id}`;
-            });
-        });
-
-
-        // This script is used to open update popup and get data from row with row id
-        const editpopup = document.getElementById('editpopup');
-        const editButtons = document.querySelectorAll(".editButton");
-        const cityupdate = document.getElementById("cityupdate");
-        
-        // This function get data based on row id on edit button click 
-        editButtons.forEach(button => {
-            button.addEventListener("click", function () {
-                const row = this.parentElement.parentElement; // Get the clicked button's row 
-                const city = row.cells[1].innerText; // Extract the data from the row's cells
-                const rowId = row.id; // Extract the data from <tr> id 
-                
-                cityupdate.value = city; // Populate the form with the row's data
-                cityid.value = rowId; // Populate the form with the row's data
-                // console.log("Row ID:", rowId); // This is used to debug in console 
             });
         });
 
@@ -359,11 +286,30 @@ if (isset($_POST['id']) && isset($_POST['status'])) {
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
-                    showNotification('Success! The Status updated successfully!');
+                    showNotification('Success! Status updated successfully!');
                 }
             };
             xhr.send(`id=${id}&status=${status}`);
         }
+
+        // This function is used to send edit id to update-donor page
+        document.getElementById('city').addEventListener('change', function () {
+            var cityId = this.value;
+            if (cityId) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'fetch_outlets.php', true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        document.getElementById('outlet').innerHTML = xhr.responseText;
+                    }
+                };
+                xhr.send('city_id=' + cityId);
+            } else {
+                document.getElementById('outlet').innerHTML = '<option value="">Select an Outlet</option>';
+            }
+            // alert(cityId);
+        });
     </script>
 
 <?php
