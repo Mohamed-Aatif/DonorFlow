@@ -35,7 +35,19 @@ include './backend-script/update-master.php';
 
                 <div class="form-control">
                     <label for="source">Source<span class="required">*</span></label>
-                    <input type="text" id="source" name="source" autocomplete="off">
+                    <input type="text" id="source" name="source" list="source-list" autocomplete="off">
+                    <datalist id="source-list">
+                        <?php
+                        $sql_fetch = "SELECT source,source_status FROM `source` WHERE source_status = 1 ORDER BY source ASC";
+                        $result = mysqli_query($conn, $sql_fetch);
+
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<option value='" . $row['source'] . "'>";
+                            }
+                        }
+                        ?>
+                    </datalist>
                 </div>
 
                 <div class="form-control">
@@ -50,12 +62,23 @@ include './backend-script/update-master.php';
 
                 <div class="form-control">
                     <label for="blood_group">Blood Group</label>
-                    <input type="text" id="blood_group" name="blood_group" autocomplete="off">
+                    <select name="blood_group" id="blood_group" required>
+                        <option selected disabled>Select blood group</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                        <option value="ALL">ALL</option>
+                    </select>
                 </div>
 
                 <div class="form-control">
                     <label for="no_of_donors">No of Donors</label>
-                    <input type="text" id="no_of_donors" name="no_of_donors" autocomplete="off">
+                    <input type="number" id="no_of_donors" name="no_of_donors" min="0" autocomplete="off">
                 </div>
 
                 <div class="form-control">
@@ -69,7 +92,7 @@ include './backend-script/update-master.php';
                 </div>
 
                 <div class="form-btn">
-                    <button type="submit" name="requirement-submit" class="success-btn">Submit</button>
+                    <button type="submit" name="request-submit" class="success-btn">Submit</button>
                     <button type="reset" class="danger-btn">Reset</button>
                 </div>
 
@@ -100,6 +123,8 @@ include './backend-script/update-master.php';
                 <thead class="bg-gray-50">
                     <tr>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">S No</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Request ID</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Requested Date</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Source</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact No</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
@@ -107,7 +132,7 @@ include './backend-script/update-master.php';
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No of Doners</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hospital Name</th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">                            Actions</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                     </tr>
                 </thead>
 
@@ -124,39 +149,21 @@ include './backend-script/update-master.php';
                         while ($row = $result->fetch_assoc()) { // Fetch rows and display in table
                             ?>
 
-                            <tr class='hover:bg-gray-50 cursor-pointer' id="<?php echo $row['city_id']; ?>">
-                                <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500'>
-                                    <?php echo $serial_no; ?>
-                                </td>
-                                <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500'>
-                                    <?php echo $row['city']; ?>
-                                </td>
+                            <tr class='hover:bg-gray-50 cursor-pointer' id="<?php echo $row['request_id']; ?>">
+                                <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500'><?php echo $serial_no; ?></td>
+                                <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500'><?php echo $row['requested_id']; ?></td>
+                                <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500'><?php echo $row['request_date']; ?></td>
+                                <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500'><?php echo $row['request_source']; ?></td>
+                                <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500'><?php echo $row['request_contact']; ?></td>
+                                <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500'><?php echo $row['request_name']; ?></td>
+                                <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500'><?php echo $row['request_blood_group']; ?></td>
+                                <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500'><?php echo $row['request_no_of_donoes']; ?></td>
+                                <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500'><?php echo $row['request_hospital']; ?></td>
+                                <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500'><?php echo $row['request_location']; ?></td>
                                 <td class='px-6 py-4 whitespace-nowrap text-sm text-blue-600'>
-                                    <?php if ($row['city_status'] == 1) {
-                                        $status = "checked";
-                                    } else {
-                                        $status = "";
-                                    } ?>
-                                    <div class="checkbox-wrapper-51">
-                                        <input type="checkbox" id="id-<?php echo $row['city_id']; ?>"
-                                            data-id="<?php echo $row['city_id']; ?>" onclick="sendToPHP(this)" <?php echo $status; ?>>
-                                        <label class="toggle" for="id-<?php echo $row['city_id']; ?>"
-                                            data-id="id-<?php echo $row['city_id']; ?>" onclick="toggleStatus(this)">
-                                            <span>
-                                                <svg viewBox="0 0 10 10" height="10px" width="10px">
-                                                    <path
-                                                        d="M5,1 L5,1 C2.790861,1 1,2.790861 1,5 L1,5 C1,7.209139 2.790861,9 5,9 L5,9 C7.209139,9 9,7.209139 9,5 L9,5 C9,2.790861 7.209139,1 5,1 L5,9 L5,1 Z">
-                                                    </path>
-                                                </svg>
-                                            </span>
-                                        </label>
-                                    </div>
-                                </td>
-                                <td class='px-6 py-4 whitespace-nowrap text-sm text-blue-600'>
-                                    <button class='editButton tab-btn' onclick='openEditPopup()'><span
-                                            class='material-symbols-outlined'>edit_square</span></button>
-                                    <button class='deleteButton tab-btn' onclick='openPopup()'><span
-                                            class='material-symbols-outlined'>delete</span></button>
+                                    <button class='updateButton tab-btn' data-id='<?php echo $row['request_id']; ?>'><span class='material-symbols-outlined'>more_horiz</span></button>
+                                    <!-- <button class='editButton tab-btn' onclick='openEditPopup()'><span class='material-symbols-outlined'>more_horiz</span></button> -->
+                                    <!-- <button class='deleteButton tab-btn' onclick='openPopup()'><span class='material-symbols-outlined'>delete</span></button> -->
                                 </td>
                             </tr>
                             <?php
@@ -165,8 +172,7 @@ include './backend-script/update-master.php';
                     } else {
                         ?>
                         <tr>
-                            <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500' colspan='9'>No Data
-                                Found</td>
+                            <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500' colspan='9'>No Data Found</td>
                         </tr>
                         <?php
                     }
@@ -181,8 +187,17 @@ include './backend-script/update-master.php';
     </div>
 
 </main>
-
 <!-- main end -->
+
+<script>
+document.querySelectorAll('.updateButton').forEach(button => {
+    button.addEventListener('click', function () {
+        const id = this.getAttribute('data-id'); // Get the ID from the data-id attribute
+        // Redirect to update.php with the ID as a query parameter
+        window.location.href = `add-donation.php?id=${id}`;
+    });
+});
+</script>
 
 <?php
 include 'footer.php';

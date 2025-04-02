@@ -130,6 +130,7 @@ require 'db.conn.php';
                 <button onclick="location.href='add-outlet.php'">Outlet Master</button>
                 <button onclick="location.href='add-city.php'">City Master</button>
                 <button onclick="location.href='add-designation.php'">Designation Master</button>
+                <button onclick="location.href='add-source.php'">Source Master</button>
             </div>
 
             <button class="dropdown-btn"><span class="material-symbols-outlined">store</span>Record</button>
