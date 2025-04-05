@@ -1,23 +1,8 @@
 <?php
-include 'header.php';
+include 'update-header.php';
 require './backend-script/insert-master.php';
 include './backend-script/delete-master.php';
 include './backend-script/update-master.php';
-
-// if ($_SERVER["REQUEST_METHOD"] == "POST") {
-//     $employeeid = $_POST['employeeid'];
-//     $donorname = $_POST['donorname'];
-//     $contactno = $_POST['contactno'];
-//     $bloodgroup = $_POST['bloodgroup'];
-//     $gender = $_POST['gender'];
-//     $dob = $_POST['dob'];
-//     $designation = $_POST['designation'];
-//     $city = $_POST['city'];
-//     $outlet = $_POST['outlet'];
-
-//     // Perform your update operations here, like inserting data into the database
-//     echo "Data received successfully!";
-// }
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -165,9 +150,8 @@ if (isset($_GET['id'])) {
                         </div>
 
                         <div class="form-btn">
-                            <button type="submit" name="donor-update" class="success-btn">Submit</button>
-                            <button type="button" onclick="window.location.href='add-donor.php'" class="danger-btn"
-                                id="closeButton">Close</button>
+                            <button type="submit" name="donor-update" class="success-btn">Update</button>
+                            <button type="button" onclick="window.location.href='add-donor.php'" class="danger-btn" id="closeButton">Cancel</button>
                         </div>
                     </form>
                     <?php
@@ -176,9 +160,7 @@ if (isset($_GET['id'])) {
                     echo "No record found for the given ID.";
                 }
 
-                // $stmt->close();
 }
-// $conn->close();
 ?>
         </div>
     </div>

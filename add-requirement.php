@@ -106,14 +106,6 @@ include './backend-script/update-master.php';
         <div class="header">
             <span>Request List</span>
             <div class="header-filter">
-                <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search" autocomplete="off">
-                
-                <select id="rowsPerPage" style="width: 70px;">
-                    <option value="10" selected>10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                </select>
             </div>
         </div>
 
@@ -139,7 +131,7 @@ include './backend-script/update-master.php';
                 <tbody class="bg-white divide-y divide-gray-200" id="tableBody">
 
                     <?php
-                    $sql = "SELECT * FROM `request` ORDER BY `request_date` DESC"; // Query to fetch data
+                    $sql = "SELECT * FROM `request` ORDER BY `request_date` DESC LIMIT 5"; // Query to fetch data
                     $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) { // Check if data exists
@@ -147,6 +139,12 @@ include './backend-script/update-master.php';
                         $serial_no = 1; // Initialize serial number
                     
                         while ($row = $result->fetch_assoc()) { // Fetch rows and display in table
+                            
+                        $requested_id = $row['requested_id'];
+                        
+                        // This query is used to count no of donation 
+                        $donor_count = "SELECT `donation_request_id` FROM `donation_record` WHERE `donation_request_id` = $requested_id"; // Query to fetch data
+                        $res = mysqli_query($conn, $donor_count);
                             ?>
 
                             <tr class='hover:bg-gray-50 cursor-pointer' id="<?php echo $row['request_id']; ?>">
@@ -157,13 +155,21 @@ include './backend-script/update-master.php';
                                 <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500'><?php echo $row['request_contact']; ?></td>
                                 <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500'><?php echo $row['request_name']; ?></td>
                                 <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500'><?php echo $row['request_blood_group']; ?></td>
-                                <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500'><?php echo $row['request_no_of_donoes']; ?></td>
+                                <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500'><?php echo $row['request_no_of_donoes']; ?> - <?php echo $res->num_rows; ?></td>
                                 <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500'><?php echo $row['request_hospital']; ?></td>
-                                <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500'><?php echo $row['request_location']; ?></td>
+                                <td class='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500 details-data'><p class='details-data'><?php echo $row['request_location']; ?></p></td>
                                 <td class='px-6 py-4 whitespace-nowrap text-sm text-blue-600'>
-                                    <button class='updateButton tab-btn' data-id='<?php echo $row['request_id']; ?>'><span class='material-symbols-outlined'>more_horiz</span></button>
-                                    <!-- <button class='editButton tab-btn' onclick='openEditPopup()'><span class='material-symbols-outlined'>more_horiz</span></button> -->
-                                    <!-- <button class='deleteButton tab-btn' onclick='openPopup()'><span class='material-symbols-outlined'>delete</span></button> -->
+                                    <div class="menu-container">
+                                        <button class="menu-btn" onclick="toggleDropdown(this)"><span class='material-symbols-outlined'>more_horiz</span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><button class='viewButton tab-btn view-btn' data-id='<?php echo $row['request_id']; ?>'>View Details</button></li>
+                                            <li><button class='updateButton tab-btn edit-btn' data-id='<?php echo $row['request_id']; ?>'>Update Request</li>
+                                            <li><button class='donorButton tab-btn edit-btn' data-id='<?php echo $row['request_id']; ?>'>Add Donor</li>
+                                            <?php if($res->num_rows <= 0) { ?>
+                                                <li><button class='deleteButton tab-btn delete-btn' onclick='openPopup()' data-id="<?php echo $row['request_id']; ?>">Delete</button></li>
+                                            <?php } ?>
+                                        </ul>
+                                    </div>
                                 </td>
                             </tr>
                             <?php
@@ -182,21 +188,137 @@ include './backend-script/update-master.php';
 
                 </tbody>
             </table>
-            <div id="pagination" class="pagination"></div>
         </div>
     </div>
 
 </main>
 <!-- main end -->
 
+<!-- This div contain record delete conformation popup  -->
+<div class="popup-overlay" id="popup">
+    <div class="popup">
+        <h2>Confirm Delete</h2>
+        <p>Are you sure you want to delete this record? This action cannot be undone.</p>
+
+        <form method="post">
+            <input type="text" id="deleterequestid" name="deleterequestid" hidden>
+            <button class="confirm-btn" name="delete-request">Yes, Delete</button>
+            <button type="button" class="cancel-btn" onclick="closePopup()">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<style>
+.menu-container {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    margin-top: 5px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    list-style: none;
+    padding: 0;
+    width: 150px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.dropdown-menu li {
+    padding: 0;
+}
+
+.dropdown-menu button {
+    width: 100%;
+    padding: 10px !important;
+    border: none;
+    background-color: #fff;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'Arial', sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+    color: #333;
+    transition: .5s;
+}
+
+.dropdown-menu button:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.dropdown-menu .delete-btn:hover {
+    background-color: #dc3545;
+}
+</style>
+
 <script>
+// this script is used to redirect the page to update form 
+document.querySelectorAll('.viewButton').forEach(button => {
+    button.addEventListener('click', function () {
+        const id = this.getAttribute('data-id'); // Get the ID from the data-id attribute
+        // Redirect to update.php with the ID as a query parameter
+        window.location.href = `requirement-list.php?id=${id}`;
+    });
+});
+
+// this script is used to redirect the page to update form 
 document.querySelectorAll('.updateButton').forEach(button => {
     button.addEventListener('click', function () {
         const id = this.getAttribute('data-id'); // Get the ID from the data-id attribute
         // Redirect to update.php with the ID as a query parameter
-        window.location.href = `add-donation.php?id=${id}`;
+        window.location.href = `requirement-update.php?id=${id}`;
     });
 });
+
+// this script is used to redirect the page to add donor form 
+document.querySelectorAll('.donorButton').forEach(button => {
+    button.addEventListener('click', function () {
+        const id = this.getAttribute('data-id'); // Get the ID from the data-id attribute
+        // Redirect to update.php with the ID as a query parameter
+        window.location.href = `add-donor-to.php?id=${id}`;
+    });
+});
+
+// This script is used to open delete conformation popup and get row id
+const popup = document.getElementById('popup');
+const deleteButtons = document.querySelectorAll(".deleteButton");
+
+// This function get row id on delete button click 
+deleteButtons.forEach(button => {
+    button.addEventListener("click", function () {
+        // const row = this.parentElement.parentElement;
+        // const rowId1 = row.id;
+        const id = this.getAttribute('data-id');
+        deleterequestid.value = id;
+    });
+});
+
+
+// this sript is used to show view more list of table    
+function toggleDropdown(button) {
+    const dropdown = button.nextElementSibling;
+    const allDropdowns = document.querySelectorAll(".dropdown-menu");
+
+    allDropdowns.forEach((menu) => {
+        if (menu !== dropdown) menu.style.display = "none";
+    });
+
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+}
+
+window.onclick = (event) => {
+    if (!event.target.closest(".menu-container")) {
+        const allDropdowns = document.querySelectorAll(".dropdown-menu");
+        allDropdowns.forEach((menu) => (menu.style.display = "none"));
+    }
+};
 </script>
 
 <?php

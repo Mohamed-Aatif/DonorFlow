@@ -60,8 +60,8 @@ require 'db.conn.php';
                     <button><span class="material-symbols-outlined">store</span>Outlet</button>
                     <button><span class="material-symbols-outlined">payments</span>Payments</button>
                     <button><span class="material-symbols-outlined">group</span>Users</button>
-                    <button onclick="location.href='site-map.php'"><span
-                            class="material-symbols-outlined">link</span>Links</button>
+                    <!-- <button onclick="location.href='site-map.php'"><span class="material-symbols-outlined">link</span>Links</button> -->
+                    <button onclick="location.href='navigation.php'"><span class="material-symbols-outlined">hub</span>Navigation</button>
                 </div>
             </div>
 
@@ -169,7 +169,6 @@ require 'db.conn.php';
                 <button onclick="location.href='brand-details.php'">Payment Types List</button>
                 <button onclick="location.href='branch.php'">Brand Performance Reports</button>
             </div>
-
         </div>
 
     </aside>
